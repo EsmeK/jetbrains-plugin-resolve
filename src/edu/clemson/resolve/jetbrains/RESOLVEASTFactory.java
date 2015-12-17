@@ -9,7 +9,7 @@ import com.intellij.psi.impl.source.tree.PsiCoreCommentImpl;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
-/** How to create parse tree nodes (Jetbrains calls them AST nodes). Later
+/** How to create parse tree nodes (jetbrains calls them AST nodes). Later
  *  non-leaf nodes are converted to PSI nodes by the {@link ParserDefinition}.
  *  Leaf nodes are already considered PSI nodes.
  */
