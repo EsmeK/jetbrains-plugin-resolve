@@ -1,8 +1,9 @@
 grammar Resolve;
 
 moduleDecl
-    :   (precisModuleDecl
-    |   precisExtensionModuleDecl) EOF
+    :   ( precisModuleDecl
+        | precisExtensionModuleDecl
+        ) EOF
     ;
 
 precisModuleDecl

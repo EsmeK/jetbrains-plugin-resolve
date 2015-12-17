@@ -96,10 +96,4 @@ public class ResFile extends PsiFileBase {
     }
 
     */
-
-    public static class ResFileStub extends PsiFileStubImpl<ResFile> {
-        public ResFileStub(ResFile file) {
-            super(file);
-        }
-    }
 }
