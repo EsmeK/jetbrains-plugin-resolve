@@ -10,7 +10,7 @@ public interface ResModuleDecl extends ResNamedElement {
 
     @NotNull public ResBlock getBlock();
 
-    @NotNull public List<ResUsesItem> getUsesItems();
+/*    @NotNull public List<ResUsesItem> getUsesItems();
 
     @NotNull public List<ResModuleSpec> getSuperModuleSpecList();
 
@@ -25,5 +25,5 @@ public interface ResModuleDecl extends ResNamedElement {
     @Nullable public ResModuleParameters getModuleParameters();
 
     @NotNull public List<ResOperationLikeNode> getOperationLikeThings();
-
+*/
 }

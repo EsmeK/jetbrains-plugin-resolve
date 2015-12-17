@@ -39,6 +39,6 @@ public interface ResNamedElement
 
     @NotNull public PsiFile getContainingFile();
 
-    @Nullable ResType findSiblingType();
+    //@Nullable ResType findSiblingType();
 
 }

@@ -32,7 +32,7 @@ public class ResFile extends PsiFileBase {
         return PsiTreeUtil.findChildOfType(this, ResModuleDecl.class);
     }
 
-    @NotNull public List<ResMathDefinitionSignature> getMathDefinitionSignatures() {
+ /*   @NotNull public List<ResMathDefinitionSignature> getMathDefinitionSignatures() {
         ResModuleDecl enclosedModule = getEnclosedModule();
         return enclosedModule != null ?
                 enclosedModule.getMathDefinitionSignatures() :
@@ -95,11 +95,7 @@ public class ResFile extends PsiFileBase {
         return result;
     }
 
-    /*@NotNull public List<ResOperationWithBodyNode> getOperationImpls() {
-        ResModuleDecl enclosedModule = getEnclosedModule();
-        return enclosedModule != null ? enclosedModule.getOperationsWithImpls() :
-                new ArrayList<ResOperationWithBodyNode>();
-    }*/
+    */
 
     public static class ResFileStub extends PsiFileStubImpl<ResFile> {
         public ResFileStub(ResFile file) {
