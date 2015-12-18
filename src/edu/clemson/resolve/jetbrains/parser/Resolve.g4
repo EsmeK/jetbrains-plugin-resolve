@@ -8,8 +8,8 @@ moduleDecl
 
 precisModuleDecl
     :   'Precis' name=ID ';'
-        //    (usesList)?
-        //    precisBlock
+        (usesList)?
+        precisBlock
         'end' closename=ID ';'
     ;
 
