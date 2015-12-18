@@ -65,7 +65,6 @@ public class RESOLVEParserDefinition implements ParserDefinition {
         return new ANTLRLexerAdaptor(RESOLVELanguage.INSTANCE, lexer);
     }
 
-
     @NotNull public PsiParser createParser(final Project project) {
         final ResolveParser parser = new ResolveParser(null);
         return new ANTLRParserAdaptor(RESOLVELanguage.INSTANCE, parser) {

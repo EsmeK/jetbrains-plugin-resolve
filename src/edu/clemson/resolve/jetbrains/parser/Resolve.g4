@@ -8,15 +8,14 @@ moduleDecl
 
 precisModuleDecl
     :   'Precis' name=ID ';'
-        (usesList)?
-        precisBlock
+        //    (usesList)?
+        //    precisBlock
         'end' closename=ID ';'
     ;
 
 precisExtensionModuleDecl
-    :   'Precis' 'Extension' name=ID 'for' precis=ID
-        ('extended_by' precisExt=ID)? ';'
-        precisBlock
+    :   'Precis' 'Extension' name=ID 'for' precis=ID ';'
+        // ...
         'end' closename=ID ';'
     ;
 
@@ -216,3 +215,13 @@ INT : [0-9]+ ;
 STRING :  '"' (ESC | ~["\\])* '"' ;
 fragment ESC :   '\\' ["\bfnrt] ;
 WS : [ \t\n\r]+ -> channel(HIDDEN) ;
+
+/** "catch all" rule for any char not matched in a token rule of your
+ *  grammar. Lexers in Intellij must return all tokens good and bad.
+ *  There must be a token to cover all characters, which makes sense, for
+ *  an IDE. The parser however should not see these bad tokens because
+ *  it just confuses the issue. Hence, the hidden channel.
+ */
+ERRCHAR
+   :  .  -> channel(HIDDEN)
+   ;
