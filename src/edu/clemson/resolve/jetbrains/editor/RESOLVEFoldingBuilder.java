@@ -34,10 +34,6 @@ public class RESOLVEFoldingBuilder extends CustomFoldingBuilder implements DumbA
             //if (((ResOperationProcedureDecl)e).getParamDeclList().isEmpty()) return;
             fold(e, ((ResOperationProcedureDecl)e).getProcedure(), ((ResOperationProcedureDecl)e).getEnd(), "{...}", result);
         }
-        /*if (e instanceof GoInterfaceType) {
-            if (e.getChildren().length == 0) return;
-            fold(e, ((GoInterfaceType)e).getLbrace(), ((GoInterfaceType)e).getRbrace(), "{...}", result);
-        }*/
     }
 
     private static void fold(@NotNull PsiElement e,
@@ -86,77 +82,17 @@ public class RESOLVEFoldingBuilder extends CustomFoldingBuilder implements DumbA
         ResFile file = (ResFile)root;
         if (!file.isContentsLoaded()) return;
 
-//        GoImportList importList = ((GoFile)root).getImportList();
-//        if (importList != null) {
-//            GoImportDeclaration firstImport = ContainerUtil.getFirstItem(importList.getImportDeclarationList());
-//            if (firstImport != null) {
-//                PsiElement importKeyword = firstImport.getImport();
-//                int offset = importKeyword.getTextRange().getEndOffset();
-//                int startOffset = importKeyword.getNextSibling() instanceof PsiWhiteSpace ? offset + 1 : offset;
-//                int endOffset = importList.getTextRange().getEndOffset();
-//                if (endOffset - startOffset > 3) {
-//                    result.add(new NamedFoldingDescriptor(importList, startOffset, endOffset, null, "..."));
-//                }
-//            }
-//        }
-
-//        for (GoBlock block : PsiTreeUtil.findChildrenOfType(file, GoBlock.class)) {
-//            if (block.getTextRange().getLength() > 1) {
-//                result.add(new NamedFoldingDescriptor(block.getNode(), block.getTextRange(), null, "{...}"));
-//            }
-//        }
-
-//        for (GoExprSwitchStatement switchStatement : PsiTreeUtil.findChildrenOfType(file, GoExprSwitchStatement.class)) {
-//            fold(switchStatement, switchStatement.getLbrace(), switchStatement.getRbrace(), "{...}", result);
-//        }
-
-//        for (GoSelectStatement selectStatement : PsiTreeUtil.findChildrenOfType(file, GoSelectStatement.class)) {
-//            fold(selectStatement, selectStatement.getLbrace(), selectStatement.getRbrace(), "{...}", result);
-//        }
-
-        for (ResOperationLikeNode type : file.getOperationLikeThings()) {
-            foldTypes(type.getType(), result);
-            //fold(type, type.getProcedure(), type.getEnd(), "{...}", result);
+        for (ResOperationProcedureDecl type : PsiTreeUtil.findChildrenOfType(file, ResOperationProcedureDecl.class)) {
+            fold(type, type.getProcedure(), type.getCloseIdentifier(), "{...}", result);
         }
-//
-//        for (GoExprCaseClause caseClause : PsiTreeUtil.findChildrenOfType(file, GoExprCaseClause.class)) {
-//            PsiElement colon = caseClause.getColon();
-//            if (colon != null && !caseClause.getStatementList().isEmpty()) {
-//                fold(caseClause, colon.getNextSibling(), caseClause, "...", result);
-//            }
-//        }
-//
-//        for (GoCommClause commClause : PsiTreeUtil.findChildrenOfType(file, GoCommClause.class)) {
-//            PsiElement colon = commClause.getColon();
-//            if (colon != null && !commClause.getStatementList().isEmpty()) {
-//                fold(commClause, colon.getNextSibling(), commClause, "...", result);
-//            }
-//        }
-//
-//        for (GoVarDeclaration varDeclaration : PsiTreeUtil.findChildrenOfType(file, GoVarDeclaration.class)) {
-//            if (varDeclaration.getVarSpecList().size() > 1) {
-//                fold(varDeclaration, varDeclaration.getLparen(), varDeclaration.getRparen(), "(...)", result);
-//            }
-//        }
-//
-//        for (GoConstDeclaration constDeclaration : PsiTreeUtil.findChildrenOfType(file, GoConstDeclaration.class)) {
-//            if (constDeclaration.getConstSpecList().size() > 1) {
-//                fold(constDeclaration, constDeclaration.getLparen(), constDeclaration.getRparen(), "(...)", result);
-//            }
-//        }
-//
-//        for (GoTypeDeclaration typeDeclaration : PsiTreeUtil.findChildrenOfType(file, GoTypeDeclaration.class)) {
-//            if (typeDeclaration.getTypeSpecList().size() > 1) {
-//                fold(typeDeclaration, typeDeclaration.getLparen(), typeDeclaration.getRparen(), "(...)", result);
-//            }
-//        }
-//
-//        for (GoCompositeLit compositeLit : PsiTreeUtil.findChildrenOfType(file, GoCompositeLit.class)) {
-//            GoLiteralValue literalValue = compositeLit.getLiteralValue();
-//            if (literalValue.getElementList().size() > 1) {
-//                fold(literalValue, literalValue.getLbrace(), literalValue.getRbrace(), "{...}", result);
-//            }
-//        }
+
+        for (ResIfStatement type : PsiTreeUtil.findChildrenOfType(file, ResIfStatement.class)) {
+            fold(type, type.getThen(), type.getEnd(), "...", result);
+        }
+
+        for (ResWhileStatement type : PsiTreeUtil.findChildrenOfType(file, ResWhileStatement.class)) {
+            fold(type, type.getDo(), type.getEnd(), "...", result);
+        }
 
         if (!quick) {
             final Set<PsiElement> processedComments = ContainerUtil.newHashSet();
@@ -192,10 +128,6 @@ public class RESOLVEFoldingBuilder extends CustomFoldingBuilder implements DumbA
         if (type == RESOLVEParserDefinition.LINE_COMMENT || type == RESOLVEParserDefinition.MULTILINE_COMMENT) {
             return CodeFoldingSettings.getInstance().COLLAPSE_DOC_COMMENTS;
         }
-        /*if (type == GoTypes.BLOCK && CodeFoldingSettings.getInstance().COLLAPSE_METHODS) {
-            ASTNode parent = node.getTreeParent();
-            return parent != null && parent.getPsi() instanceof GoFunctionOrMethodDeclaration;
-        }*/
         return CodeFoldingSettings.getInstance().COLLAPSE_IMPORTS;// && node.getElementType() == GoTypes.IMPORT_LIST;
     }
 }
