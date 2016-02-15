@@ -94,6 +94,10 @@ public class RESOLVEFoldingBuilder extends CustomFoldingBuilder implements DumbA
             fold(type, type.getDo(), type.getEnd(), "...", result);
         }
 
+        for (ResProcedureDecl type : PsiTreeUtil.findChildrenOfType(file, ResProcedureDecl.class)) {
+            fold(type, type.getProcedure(), type.getCloseIdentifier(), "...", result);
+        }
+
         if (!quick) {
             final Set<PsiElement> processedComments = ContainerUtil.newHashSet();
             PsiTreeUtil.processElements(file, new PsiElementProcessor() {
